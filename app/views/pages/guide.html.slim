@@ -1,18 +1,21 @@
+
 p
 H3 Zo maak je de RailsPet
 p
-
-t 1) In de Console type je 
-b < rails new railspet > 
-t om een nieuwe Rails-applicatie te maken.
-
+t Om een nieuwe rails-app te maken typ je in de Console: 
+br
+br
+.code-container
+  code rails new railspet
 p
-
-t 2) Type nu 
-b < rake db:create > 
-t om de database aan te maken. Dit is waar we alle gegevens in gaan opslaan.
-
+t We maken nu een plek waar alle gegevens opgeslagen worden. Dat noemen we de database en deze maken we zo:
+br
+br
+.code-container
+  code  rake db:create  
 p
-
-t 3) Omdat we nu een Pet-model in de database willen tik je 
-b < rails generate scaffold pet name:string max_weight:integer >
+t Maak een Pet-model in de database: 
+br
+br
+.code-container
+  code  rails generate scaffold pet name:string max_weight:integer 
