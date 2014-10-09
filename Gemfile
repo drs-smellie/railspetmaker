@@ -24,7 +24,6 @@ gem 'coffee-rails', '~> 4.0.0'
 # Gems we need
 gem 'jquery-rails'
 gem 'foundation-rails'
-gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'slim-rails'
 
