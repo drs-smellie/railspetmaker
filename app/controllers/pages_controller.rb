@@ -6,4 +6,7 @@ class PagesController < ApplicationController
   def nitrous
   end
 
+  def foodguide
+  end
+
 end
