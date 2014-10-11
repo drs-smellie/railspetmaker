@@ -1,1 +1,77 @@
-foodguide.html.slim
+p
+H3 Zo maak je de Food voor jou RailsPet
+p
+p Bij het Pet model hebben we Rails heel hard voor ons laten werken, heel auto-magisch, maar nu gaan we wat meer dingen zelf doen. We gaan Food maken voor onze Pet. Omdat het Food dat we aanmaken steeds maar bij een huisdier hoort, maken we een nested resource. 
+p Een Pet heeft heel veel Food, maar Food hoort maar bij een Pet. Food heeft een naam, aantal calorieën en een referentienummer bij welk Pet het hoort.
+
+p Tik in de console:
+.code-container
+  code $ rails g model Food name:string calories:integer pet:references
+p
+p en volg met 
+.code-container
+  code $ rake db:migrate
+p
+t We willen dat Food echt bij Pet hoort. Als je het mapje app > models > food.rb opent zie je de code 
+code  "belongs_to :pet"
+t . Als we nu pet.rb openen, zien we echter nog geen omschrijven. Plak daarom tussen de regels 
+code "class Pet < ActiveRecord::Base"
+t  en 
+code "validates :name, presence: true, on: :create"
+t  de regel
+p
+.code-container
+  code
+    p has_many :foods
+t Ga een mapje omhoog, het controllers mapje. Hierin zie je het bestand 
+code pets_controller.rb
+p
+p Hierin staan alle acties die we met een Pet mogen doen. Index > alle Pets bekijken, Show > een bepaalde Pet bekijken, New > een nieuw leeg veldje maken in de database, Create > Aanmaken van een nieuwe Pet, Edit > Een Pet klaarzetten om aan te passen, Update > De informatie van een Pet wijzigen, Destroy > een Pet verwijderen uit de database. 
+p Toen we bij het aanmaken van het Pet-model scaffolding kozen, heeft Rails deze informatie voor ons gemaakt. Omdat we nu een model bouwen dat iets ingewikkelder in elkaar zit en bij een ander model hoort gaan we de controller zelf bouwen. 
+p
+t Ga op "controllers" met je rechtermuisknop en kies "New File" vul hier de naam 
+code foods_controller.rb
+t  in. Let op dat je bij controllers de meervouds-vorm (foods met een -s) gebruikt.
+p Plak in dit bestand de volgende code, zorg dat je deze net zo vormgeeft als de pets_controller.rb
+.code-container
+  code
+    p class FoodsController < ApplicationController
+
+p Geef dan de index aan:
+.code-container
+  code
+    p def index
+    p @pet = Pet.find(params[:pet_id])
+    p @foods = Food.all
+    p  end
+  p
+  code
+    t def new
+        @pet = Pet.find(params[:pet_id])
+        @food = Food.new
+      end
+
+      def create
+        @pet = Pet.find(params[:pet_id])
+        @food = @pet.foods.build(food_params)
+        if @food.save
+          redirect_to @pet, notice: 'Food was successfully created.'
+        else
+          render :new
+        end
+      end
+
+      def destroy
+        @pet = Pet.find(params[:pet_id])
+        @food = @pet.foods.find(params[:id])
+        @food.destroy
+        redirect_to @pet, notice: 'Food was successfully pooped by your pet.'
+      end
+
+      private
+
+        def food_params
+          params.require(:food).permit(:name, :calories)
+        end
+    end
+

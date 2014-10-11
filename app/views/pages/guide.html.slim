@@ -51,5 +51,15 @@ p Ga met je muis naar de bovenste zwarte balk en klik op Preview, en kies dan 'P
 p
 p Je ziet nu staan "Listing pets". Klik maar op "new pet", probeer maar eens op "create pet" te klikken zonder de velden voor Name en Max weight in te vullen. Dat gaat dus niet. Vul maar een naam voor je huisdier in (bijv. Fluffy) en een max gewicht (bijv. 340). "Pet was successfully created." Staat er in groen in beeld. Hoera!
 p
-p Geef jezelf maar even een schouderklopje want je hebt al heel wat gedaan: Een nieuwe Rails applicatie opgezet, de database opgezet, een Model gebouwd, en je hebt de applicatie verteld waar een nieuw Model op gecheckt moet worden voordat deze wordt gecreëerd. Ook heb je de rails server gestart en en heb je gecheckt of het formulier werkt.
+p We willen eigenlijk dat de applicatie meteen opent op de pets pagina. Ga terug naar Nitrous, ga in de console staan en sluit de rails server af door op "control c" in te drukken.
+p Ga naar de map railspet > config > routes en plak na de regel "resources :pets" de volgende regel:
+p
+  .code-container
+    code
+      t root :to => redirect('/pets')
 
+p Geef jezelf maar even een schouderklopje want je hebt al heel wat gedaan: Een nieuwe Rails applicatie opgezet, de database opgezet, een Model gebouwd, en je hebt de applicatie verteld waar een nieuw Model op gecheckt moet worden voordat deze wordt gecreëerd. Ook heb je de rails server gestart en en heb je gecheckt of het formulier werkt. Ook hebben we de applicatie verteld dat deze altijd op de Pet-pagina moet openen.
+p
+t Ga nu verder met de 
+= link_to "RailsPet FoodGuide", foodguide_path
+p
