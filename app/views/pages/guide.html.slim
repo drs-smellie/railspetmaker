@@ -1,20 +1,52 @@
 p
 H3 Zo maak je de RailsPet
 p
-t Om een nieuwe rails-app te maken typ je in de Console: 
-br
-br
-.code-container
-  code rails new railspet
+p Als Nitrous zich opent in IDE-omgeving zie je onderin de console, hierin kunnen we commando's tikken die de computer vertellen wat het moet doen.
+#console
 p
-t We maken nu een plek waar alle gegevens opgeslagen worden. Dat noemen we de database en deze maken we zo:
-br
-br
-.code-container
-  code  rake db:create  
+
+t Telkens als je dit → $ dollartekentje ziet, moet je de 
+strong tekst 
+t in de console invoeren.
 p
-t Maak een Pet-model in de database: 
+
+p Om een nieuwe rails-app te maken typ je in de Console: 
+.code-container
+  code $ rails new railspet
+p Rails maakt nu allemaal bestanden en mapjes aan, die wij kunnen vullen met code. In de linkerbalk kun je deze mapjes zien. Het kan zijn dat je even het ~ open en dicht moet klappen op de nieuw aangemaakte mapjes zichtbaar te krijgen.
+
+t We zitten nog niet in de goeie map. Daar moeten we eerst heen navigeren. 
 br
 br
 .code-container
-  code  rails generate scaffold pet name:string max_weight:integer 
+  code $ cd railspet
+p
+
+p Nu moeten we nog een plek hebben waar alle gegevens opgeslagen worden. Dat noemen we de database. Voer in de console:
+.code-container
+  code $ rake db:create  
+p
+P We gaan nu echt beginnen met programmeren. We gaan een model genereren. Een soort voorbeeld, waar alle (huis-)dieren die we straks willen maken op moeten lijken. Omdat Rails slecht overweg kan met Nederlands, gebruiken we het Engelse woord Pet. We vertellen de database dat een Pet een naam (name) moet hebben en dat die naam een streng van letters mag zijn (string). Ook heeft iedere Pet een maximaal gewicht (max_weight) en dat maximale gewicht is altijd een heel getal (integer), dus niet 3,5 maar wel 4 of 478.
+.code-container
+  code $ rails generate scaffold pet name:string max_weight:integer 
+p Als we willen dat Rails deze opdracht goed uitvoert tikken we:
+.code-container
+  code $ rake db:migrate
+p
+P Rails maakt nu allemaal bestandjes voor ons aan en verteld de database hoe een Pet eruit komt te zien. Omdat we niet willen dat iemand een Pet aanmaakt zonder naam, of zonder maximaal gewicht, moeten we wat regels geven aan de applicatie. Open het mapje railspet > app > models en dan het bestandje pet.rb. 
+#pet
+p
+p In dit bestand (niet in de console!) zet je tussen "class Pet < ActiveRecord::Base" en "end" de volgende twee regels. Hiermee voorkom je dat er lege huisdieren in je database terechtkomen.
+.code-container
+  code 
+    p validates :name, presence: true, on: :create
+    p validates :max_weight, presence: true, on: :create
+p
+p We willen eigenlijk wel weten hoe ons werk er tot nu toe uitziet. Ga naar de console en start de Rails-server.
+.code-container
+  code $ rails server
+p
+p Ga met je muis naar de bovenste zwarte balk en klik op Preview, en kies dan 'Port 3000'. Je ziet dan als het goed is het standaard Ruby on Rails: Welcome aboard scherm. Dit komt, omdat we Ruby nog niet hebben verteld wat we op de homepage willen. We kunnen al wel naar ons nieuwe pet-formulier kijken. Plak in je browserbalk, na de url die er al staat /pets dus na het ~~we.nitrousbox.com komt /pets
+#url
+p
+p Je ziet nu staan "Listing pets". Klik maar op "new pet", probeer maar eens op "create pet" te klikken zonder de velden voor Name en Max weight in te vullen. Dat gaat dus niet. Vul maar een naam voor je huisdier in (bijv. Fluffy) en een max gewicht (bijv. 340). "Pet was successfully created." Staat er in groen in beeld. Hoera!
