@@ -1,5 +1,5 @@
 p
-H3 Zo maak je de Food voor jou RailsPet
+H3 Zo maak je Food voor jouw RailsPet
 p
 p Bij het Pet model hebben we Rails heel hard voor ons laten werken, heel auto-magisch, maar nu gaan we wat meer dingen zelf doen. We gaan Food maken voor onze Pet. Omdat het Food dat we aanmaken steeds maar bij een huisdier hoort, maken we een nested resource. 
 p Een Pet heeft heel veel Food, maar Food hoort maar bij een Pet. Food heeft een naam, aantal calorieën en een referentienummer bij welk Pet het hoort.
@@ -23,6 +23,12 @@ p
 .code-container
   code
     p has_many :foods
+p
+p Ga nu naar de map railspet > config > routes.rb en haal alle regels met een # erin weg.
+p pas nu het bestand aan zodat het er zo uit komt te zien:
+#routes
+p
+p
 t Ga een mapje omhoog, het controllers mapje. Hierin zie je het bestand 
 code pets_controller.rb
 p
@@ -32,46 +38,46 @@ p
 t Ga op "controllers" met je rechtermuisknop en kies "New File" vul hier de naam 
 code foods_controller.rb
 t  in. Let op dat je bij controllers de meervouds-vorm (foods met een -s) gebruikt.
-p Plak in dit bestand de volgende code, zorg dat je deze net zo vormgeeft als de pets_controller.rb
+p Voer de volgende tekste in dit bestand de volgende code, zorg dat je deze net zo vormgeeft als de pets_controller.rb
+#foodcontroller
+p
+p We gaan weer terug naar het bestand railspet > app > models > pet.rb. We willen van onze Pet nog wat extra informatie hebben. We willen weten hoe oud de Pet is, welk eten er allemaal gegeten is en ook hoe vol onze Pet zit. Daarom gaan we wat methodes toevoegen in dit bestand. Als we de age willen weten hoeven we eigenlijk alleen maar te weten wanneer de Pet is aangemaakt, welke dag het vandaag is en hoeveel dagen er tussen die twee data zit. 
+p Pas pet.rb aan zodat het er zo uitziet:
+#age
+p
+p We gaan nu nog twee methodes toevoegen. Om te zien hoeveel een Pet heeft gegeten en hoe vol de pet eigenlijk is. Zorg dat pet.rb er nu zo uitziet:
+p
+#methods
+p
+p We moeten nog een paar dingen aanpassen, de achterliggende code hebben we nu in orde, maar het uiterlijk van Foods hebben we nog niet aangepakt. Ga hiervoor naar railspet > app > views en maak een nieuwe folder aan. Klik met de rechtermuisknop op views en kies "New Folder". Deze noem je foods. In de foods-map maak je eerst een bestand aan dat index.html.erb heet. In het Index bestand zie je alle Foods die zijn aangemaakt.
+p Zorg dat index.html.erb er zo uitziet:
+#index
+p
+p Het volgende bestand dat we in de foods view-map gaan aanmaken heet 'show.html.erb'. Met Show kun je 1-bepaalde Food zien. Zorg dat show.html.erb er zo uitziet:
+#show
+p
+p Wat we ook nodig hebben is een bestand om een nieuw Food aan te maken. We noemen dit new.html.erb en het ziet er zo uit:
+#new
+p
+p Je ziet dat new.html.erb verwijst naar een 'form' een formulier. Dat gaan we nu aanmaken. Omdat form niet een opzichzelfstaande pagina wordt in onze applicatie, maar alleen te zien is in de New-pagina noemen we dit een partial. De naam van een partial begint altijd met een liggend steepje. Noem dit nieuwe bestand _form.html.erb
+#form
+p
+p Omdat de View-bestanden voor Pet automatisch zijn aangemaakt door Rails, voordat het systeem wist dat wij ook Foods gingen aanmaken, moeten we nu nog wat dingetjes aanpassen, om te voorkomen dat onze applicatie breekt.
+p
+p Open het bestand index.html.erb. Pas deze aan zodat het op het bestand hieronder lijkt, let goed op de verschillen.
+#petindex
+p
+p We doen hetzelfde met show.html.erb, pas deze aan zodat het lijkt op het bestand hieronder.
+#petshow
+p
+p Je hebt nu alles gedaan om Food onder te brengen bij een Pet. In de console kun je met
 .code-container
-  code
-    p class FoodsController < ApplicationController
-
-p Geef dan de index aan:
-.code-container
-  code
-    p def index
-    p @pet = Pet.find(params[:pet_id])
-    p @foods = Food.all
-    p  end
-  p
-  code
-    t def new
-        @pet = Pet.find(params[:pet_id])
-        @food = Food.new
-      end
-
-      def create
-        @pet = Pet.find(params[:pet_id])
-        @food = @pet.foods.build(food_params)
-        if @food.save
-          redirect_to @pet, notice: 'Food was successfully created.'
-        else
-          render :new
-        end
-      end
-
-      def destroy
-        @pet = Pet.find(params[:pet_id])
-        @food = @pet.foods.find(params[:id])
-        @food.destroy
-        redirect_to @pet, notice: 'Food was successfully pooped by your pet.'
-      end
-
-      private
-
-        def food_params
-          params.require(:food).permit(:name, :calories)
-        end
-    end
-
+  code $ rails server
+p de Rails server weer aanzetten.
+p 
+p Klik bovenin Nitrous op Preview en kies "Port 3000".
+p Nitrous gaat nu naar jouw applicatie. Maak maar wat huisdieren aan, laat ze eten eten en uitpoepen en bekijk hoe vol jouw huisdieren zitten.
+p
+#pinkberry
+p
+p Veel plezier met jouw zelfgebouwde applicatie!
